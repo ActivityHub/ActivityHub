@@ -10,20 +10,6 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema
-  .virtual('favoritedCities', {
-    ref: 'City', 
-    localField: '_id', 
-    foreignField: 'favoritedUsers'   
-  })
-
-userSchema
-  .virtual('wishlistedCities', { 
-    ref: 'City', 
-    localField: '_id',
-    foreignField: 'wishlistedUsers'  
-  })
-
-userSchema 
   .set('toJSON', {
     virtuals: true,
     transform(doc, json) {
@@ -39,7 +25,7 @@ userSchema
   })
 
 userSchema
-  .pre('validate', function (next) { 
+  .pre('validate', function (next) {
     if (this.isModified('password') && this.password !== this._passwordConfirmation) {
       this.invalidate('passwordConfirmation', 'does not match')
     }
